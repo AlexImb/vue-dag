@@ -1,4 +1,4 @@
-name: Unit Test
+name: Run test
 
 on: [push]
 
@@ -17,9 +17,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm test:unit
+    - name: Install dependencies
       run: |
         npm install
-        npm test:unit
+      env:
+        CI: true
+    - name: Run Jest unit tests
+      run: |
+        npm run test:unit
       env:
         CI: true
