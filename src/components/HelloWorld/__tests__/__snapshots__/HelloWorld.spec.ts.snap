@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelloWorld render correctly 1`] = `
+<div>
+  <h1>Hello </h1>
+</div>
+`;
+
+exports[`HelloWorld renders props.msg when passed 1`] = `
+<div>
+  <h1>Hello test!</h1>
+</div>
+`;
