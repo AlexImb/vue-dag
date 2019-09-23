@@ -8,10 +8,25 @@ Data-driven directed acyclic graph (DAG) visual builder for Vue.js
 ```
 npm install --save vue-dag
 ```
+or 
+```
+yarn add vue-dag
+```
 
-
+Import and register the component
 ```
 import VueDag from 'vue-dag';
+```
+
+```
+components: {
+    VueDag
+}
+```
+
+Use it in templates
+```
+<vue-dag></vue-dag>
 ```
 
 
