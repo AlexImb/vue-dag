@@ -1,2 +1,40 @@
 title: 'Vue DAG'
-description: 'Directed acyclic graph (DAG) builder for Vue.js'
+base: '/'
+serviceWorker: true
+themeConfig: 
+  repo: 'AlexImb/vue-dag'
+  docsDir: 'docs'
+  editLinks: true
+  serviceWorker: 
+    updatePopup: true
+  nav:
+    - text: Home
+      link: '/'
+    - text: Guide
+      link: '/guide/installation'
+    - text: API
+      link: '/api/'
+  sidebarDepth: 2,
+  sidebar:
+    - '/guide/':
+      title: 'Guide'
+      collapsable: false
+      children: 
+        - 
+          - 'guide/installation'
+          - 'Installation'
+    - '/api/':
+      title: 'API'
+      collapsable: false
+      children: 
+        - 
+          - 'api/props'
+          - 'Props'
+        - 
+          - 'api/events'
+          - 'Events'
+        - 
+          - 'api/slots'
+          - 'Slots'
+        
+    
