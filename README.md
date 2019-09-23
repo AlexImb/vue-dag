@@ -1,4 +1,19 @@
-# vue-dag
+# Vue DAG Builder
+
+Data-driven directed acyclic graph (DAG) visual builder for Vue.js
+
+
+## Installation
+
+```
+npm install --save vue-dag
+```
+
+
+```
+import VueDag from 'vue-dag';
+```
+
 
 ## Project setup
 ```
@@ -8,11 +23,6 @@ yarn install
 ### Compiles and hot-reloads for development
 ```
 yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
 ```
 
 ### Run your tests
