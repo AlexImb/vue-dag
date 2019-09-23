@@ -1,7 +1,11 @@
-# Vue DAG Builder
+# 🏗Vue DAG Builder
 
-Data-driven directed acyclic graph (DAG) visual builder for Vue.js
+> Data-driven directed acyclic graph (DAG) visual builder for Vue.js
 
+ [![GitHub Actions](https://github.com/aleximb/vue-dag/workflows/run-tests/badge.svg)](https://github.com/aleximb/vue-dag/actions) [![Netlify Status](https://api.netlify.com/api/v1/badges/377debe3-712c-40c8-a4a8-2909fff31db4/deploy-status)](https://app.netlify.com/sites/vue-dag/deploys)
+[![npm](https://img.shields.io/npm/v/vue-dag.svg) ![npm](https://img.shields.io/npm/dm/vue-dag.svg)](https://www.npmjs.com/package/vue-dag)
+[![vue2](https://img.shields.io/badge/vue-2+-brightgreen.svg)](https://vuejs.org/)
+![GitHub](https://img.shields.io/github/license/aleximb/vue-dag.svg)
 
 ## Installation
 
@@ -29,8 +33,14 @@ Use it in templates
 <vue-dag></vue-dag>
 ```
 
+Full documentation: [https://vue-dag.netlify.com/](https://vue-dag.netlify.com/)
 
-## Project setup
+
+
+## Project development setup
+
+
+### Installs dependencies
 ```
 yarn install
 ```
@@ -40,20 +50,17 @@ yarn install
 yarn run serve
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
 ### Lints and fixes files
 ```
 yarn run lint
 ```
 
-### Run your unit tests
+### Runs unit tests
 ```
 yarn run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Builds as library
+```
+yarn run build:library
+```
