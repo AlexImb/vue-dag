@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vd__container">
     <slot></slot>
   </div>
 </template>
@@ -8,5 +8,5 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Node extends Vue {}
+export default class DAGContainer extends Vue {}
 </script>

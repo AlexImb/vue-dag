@@ -1,19 +1,22 @@
 <template>
-  <div id="app">
-    <node>
-      <h1>Node content</h1>
-    </node>
-  </div>
+  <vue-dag v-model="graphData" />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { Node } from '@/components/Node';
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import VueDag from './VueDag.vue';
 
 @Component({
-  components: {
-    Node,
-  },
+  components: { VueDag },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  graphData: Object = {
+    nodes: [
+      { id: 0, content: 'content 0' },
+      { id: 1, content: 'content 1' },
+      { id: 2, content: 'content 2' },
+    ],
+    edges: [],
+  };
+}
 </script>

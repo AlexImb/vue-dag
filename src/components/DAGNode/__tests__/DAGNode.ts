@@ -1,12 +1,12 @@
 import { shallowMount, Wrapper } from '@vue/test-utils';
-import { Node } from '@/components/Node';
+import { DAGNode } from '@/components/DAGNode';
 import { HelloWorld } from '@/components/HelloWorld';
 
-let wrapper: Wrapper<Node>;
+let wrapper: Wrapper<DAGNode>;
 
 describe('DAGNode', () => {
   beforeEach(() => {
-    wrapper = shallowMount(Node);
+    wrapper = shallowMount(DAGNode);
   });
 
   it('renders correctly', () => {
@@ -14,7 +14,7 @@ describe('DAGNode', () => {
   });
 
   it('renders HelloWorld component inside the default slot', () => {
-    wrapper = shallowMount(Node, {
+    wrapper = shallowMount(DAGNode, {
       slots: { default: HelloWorld },
     });
     expect(wrapper.find(HelloWorld).isVueInstance()).toBe(true);
