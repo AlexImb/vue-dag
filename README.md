@@ -30,7 +30,17 @@ components: {
 
 Use it in templates
 ```html
-<vue-dag></vue-dag>
+<vue-dag v-model="graphData"></vue-dag>
+```
+
+The component does not include any CSS. You'll need to import it separately:
+```js
+import 'vue-dag/dist/vue-dag.css';
+```
+
+Alternatively, you can import the SCSS version and overrite variables and styles
+ ```scss
+@import 'vue-dag/src/scss/vue-dag.scss';
 ```
 
 Full documentation: [https://vue-dag.netlify.com/](https://vue-dag.netlify.com/)
