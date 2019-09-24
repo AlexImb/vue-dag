@@ -1,5 +1,7 @@
 <template>
-  <vue-dag v-model="graphData" />
+  <main>
+    <vue-dag v-model="graphData" />
+  </main>
 </template>
 
 <script lang="ts">
@@ -20,3 +22,11 @@ export default class App extends Vue {
   };
 }
 </script>
+
+<style lang="scss" scoped>
+main {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
+</style>
