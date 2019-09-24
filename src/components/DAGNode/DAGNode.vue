@@ -1,5 +1,5 @@
 <template>
-  <div class="vd__node">
+  <div class="vd__node" :style="nodePositionAndScale" @mousedown="$emit('selectNode', $event)">
     <div class="vd__node__link vd__node__link--top"></div>
     <div class="vd__node__link vd__node__link--right"></div>
     <div class="vd__node__link vd__node__link--bottom"></div>
@@ -16,5 +16,17 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class DAGNode extends Vue {}
+export default class DAGNode extends Vue {
+  @Prop({ default: 1 }) readonly scale!: number;
+  @Prop() readonly x!: number;
+  @Prop() readonly y!: number;
+
+  get nodePositionAndScale() {
+    return {
+      top: this.y * this.scale + 'px',
+      left: this.x * this.scale + 'px',
+      transform: `scale(${this.scale})`,
+    };
+  }
+}
 </script>

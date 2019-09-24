@@ -20,11 +20,12 @@ $vd-node-box-shadow: 0 0 4px 0 $vd-node-box-shadow-color !default;
 .vd__node {
 	width: 15rem;
 	height: 5rem;
-	cursor: pointer;
 	background: $vd-node-bg-color;
 	box-shadow: $vd-node-box-shadow;
-	margin: 0 auto;
-	transform: translate(0, 100px);
+
+	cursor: move;
+	position: absolute;
+	transform-origin: top left;
 
 	.vd__node__link {
 		width: .5rem;
@@ -32,6 +33,7 @@ $vd-node-box-shadow: 0 0 4px 0 $vd-node-box-shadow-color !default;
 		position: absolute;
 		border: .1rem solid $vd-accent-color;
 		border-radius: 50%;
+		cursor: pointer;
 		visibility: hidden;
 
 		&:hover {

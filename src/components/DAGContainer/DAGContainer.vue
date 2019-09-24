@@ -1,6 +1,10 @@
 <template>
   <div class="vd__container">
-    <slot></slot>
+    <svg width="100%" height="100%">
+      <slot name="edges" />
+    </svg>
+
+    <slot name="nodes"></slot>
   </div>
 </template>
 
