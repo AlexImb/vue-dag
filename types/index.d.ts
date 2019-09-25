@@ -9,11 +9,17 @@ declare interface GraphNode {
   y?: number;
 }
 
+declare type GraphLink = 'top' | 'right' | 'bottom' | 'left';
+
 declare interface GraphEdge {
   id: number;
   content: string;
   from: number;
   to: number;
+  fromLink?: GraphLink;
+  toLink?: GraphLink;
+  edgeColor?: string;
+  arrowColor?: string;
 }
 
 declare interface GraphData {

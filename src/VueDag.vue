@@ -1,16 +1,19 @@
 <template>
   <dag-container
-    @mousemove.native="handleMove"
-    @mouseup.native="handleUp"
-    @mousedown.native="handleDown"
+    @mousemove.native="handleMouseMove"
+    @mouseup.native="handleMouseUp"
+    @mousedown.native="handleMouseDown"
   >
-    <template #edges>
+    <template v-if="edges" #edges>
       <dag-edge
-        v-for="edge in value.edges"
+        v-for="edge in edges"
+        :id="edge.id"
         :key="'edge_' + edge.id"
-        :edge="edge"
-        :start="[1, 1]"
-        :end="[100, 100]"
+        :start="edge.start"
+        :end="edge.end"
+        :edge-color="edge.edgeColor"
+        :arrow-color="edge.arrowColor"
+        @deleteEdge="deleteEdge"
       />
     </template>
     <template #nodes>
@@ -30,7 +33,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { DAGContainer } from '@/components/DAGContainer';
 import { DAGNode } from '@/components/DAGNode';
 import { DAGEdge } from '@/components/DAGEdge';
-import { GraphData } from '../types';
+import { GraphData, GraphNode } from '../types';
 
 @Component({
   components: {
@@ -56,9 +59,8 @@ export default class VueDAG extends Vue {
 
   dragging = false;
   linking = false;
-  scrolling = false;
 
-  selected: Object | null = null;
+  selected: GraphNode | null = null;
 
   mouse = {
     x: 0,
@@ -67,74 +69,83 @@ export default class VueDAG extends Vue {
     lastY: 0,
   };
 
-  emitModel() {
-    this.$emit('input', { ...this.value, lastEdit: new Date().getTime() });
+  get edges() {
+    return this.value.edges.map(edge => {
+      const fromNode = this.value.nodes.find(node => node.id === edge.from);
+      const toNode = this.value.nodes.find(node => node.id === edge.to);
+
+      if (!fromNode || !toNode) return;
+
+      let x, y, fy, fx, tx, ty;
+      [fx, fy] = this.getLinkPosition(edge.fromLink || 'right', fromNode.x, fromNode.y);
+      [tx, ty] = this.getLinkPosition(edge.toLink || 'left', toNode.x, toNode.y);
+
+      return {
+        ...edge,
+        start: [fx, fy],
+        end: [tx, ty],
+      };
+    });
   }
 
-  selectNode(e: MouseEvent, node: Object) {
+  getLinkPosition(type: string, x: number, y: number) {
+    switch (type) {
+      case 'top':
+        return [x + 120, y - 30];
+      case 'right':
+        return [x + 240, y + 5];
+      case 'bottom':
+        return [x + 120, y + 45];
+      case 'left':
+        return [x, y + 5];
+      default:
+        break;
+    }
+  }
+
+  deleteEdge(id: number) {
+    this.value.edges = this.value.edges.filter(e => e.id !== id);
+  }
+
+  selectNode(e: MouseEvent, node: GraphNode) {
     this.selected = node;
     this.mouse.lastX = e.pageX || e.clientX + document.documentElement.scrollLeft;
     this.mouse.lastY = e.pageY || e.clientY + document.documentElement.scrollTop;
   }
 
-  handleMove(e: MouseEvent) {
+  handleMouseMove(e: MouseEvent) {
     if (this.dragging) {
       this.mouse.x = e.pageX || e.clientX + document.documentElement.scrollLeft;
       this.mouse.y = e.pageY || e.clientY + document.documentElement.scrollTop;
-      let diffX = this.mouse.x - this.mouse.lastX;
-      let diffY = this.mouse.y - this.mouse.lastY;
+      const dx = this.mouse.x - this.mouse.lastX;
+      const dy = this.mouse.y - this.mouse.lastY;
       this.mouse.lastX = this.mouse.x;
       this.mouse.lastY = this.mouse.y;
-      this.moveSelectedNode(diffX, diffY);
+      this.moveSelectedNode(dx, dy);
     }
 
     if (this.linking) {
       [this.mouse.x, this.mouse.y] = this.getMousePosition(this.$el, e);
     }
-
-    if (this.scrolling) {
-      [this.mouse.x, this.mouse.y] = this.getMousePosition(this.$el, e);
-      let diffX = this.mouse.x - this.mouse.lastX;
-      let diffY = this.mouse.y - this.mouse.lastY;
-      this.mouse.lastX = this.mouse.x;
-      this.mouse.lastY = this.mouse.y;
-      // this.value.centerX += diffX;
-      // this.value.centerY += diffY;
-    }
   }
 
-  handleUp(e: MouseEvent) {
+  handleMouseUp(e: MouseEvent) {
     this.dragging = false;
     this.linking = false;
-    this.scrolling = false;
   }
 
-  handleDown(e: MouseEvent) {
+  handleMouseDown(e: MouseEvent) {
     const target = e.target || e.srcElement;
     this.dragging = true;
   }
 
   moveSelectedNode(dx: number, dy: number) {
-    let index = this.value.nodes.findIndex(item => {
-      return this.selected && item.id === this.selected.id;
-    });
-
-    console.log(index);
-
-    let left = this.value.nodes[index].x + dx / this.value.config.scale;
-    let top = this.value.nodes[index].y + dy / this.value.config.scale;
-
-    this.$set(
-      this.value.nodes,
-      index,
-      Object.assign(this.value.nodes[index], {
-        x: left,
-        y: top,
-      }),
-    );
+    if (!this.selected || !this.selected.x || !this.selected.y) return;
+    this.selected.x = this.selected.x + dx / this.value.config.scale;
+    this.selected.y = this.selected.y + dy / this.value.config.scale;
   }
 
-  getMousePosition(element: any, event: any) {
+  getMousePosition(element: Element, event: MouseEvent) {
     let mouseX = event.pageX || event.clientX + document.documentElement.scrollLeft;
     let mouseY = event.pageY || event.clientY + document.documentElement.scrollTop;
 
@@ -145,7 +156,7 @@ export default class VueDAG extends Vue {
     return [x, y];
   }
 
-  getOffsetRect(element: any) {
+  getOffsetRect(element: Element) {
     let box = element.getBoundingClientRect();
     let scrollTop = window.pageYOffset;
     let scrollLeft = window.pageXOffset;
