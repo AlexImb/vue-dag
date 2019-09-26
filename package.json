@@ -1,6 +1,6 @@
 {
   "name": "vue-dag",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Directed acyclic graph (DAG) builder for Vue.js",
   "main": "dist/vue-dag.umd.js",
   "module": "dist/vue-dag.esm.js",
