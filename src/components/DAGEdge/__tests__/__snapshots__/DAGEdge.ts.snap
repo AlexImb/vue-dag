@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DAGEdge renders correctly 1`] = `
+<g>
+  <path d="M 0, 0 C 0, 0, 0, 0, 0, 0" style="stroke: #12c2e9; stroke-width: 2.75; fill: none;"></path>
+  <path d="M -1 -1 L 0 1 L 1 -1 z" transform="translate(0, 0) rotate(0)" style="stroke: #12c2e9; stroke-width: 6; fill: none;"></path>
+</g>
+`;
