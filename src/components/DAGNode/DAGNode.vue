@@ -1,9 +1,12 @@
 <template>
   <div class="vd__node" :style="nodePositionAndScale" @mousedown="$emit('selectNode', $event)">
-    <div class="vd__node__link vd__node__link--top"></div>
-    <div class="vd__node__link vd__node__link--right"></div>
-    <div class="vd__node__link vd__node__link--bottom"></div>
-    <div class="vd__node__link vd__node__link--left"></div>
+    <div
+      v-for="position in ['top', 'right', 'left', 'bottom']"
+      :key="`link_${position}`"
+      class="vd__node__link"
+      :class="`vd__node__link--${position}`"
+      @click="$emit('linkClick', position, id)"
+    ></div>
     <slot>
       <div class="vd__node__default-content">
         Empty node
@@ -18,6 +21,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class DAGNode extends Vue {
   @Prop({ default: 1 }) readonly scale!: number;
+  @Prop() readonly id!: number;
   @Prop() readonly x!: number;
   @Prop() readonly y!: number;
 

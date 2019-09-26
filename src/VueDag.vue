@@ -15,14 +15,24 @@
         :arrow-color="edge.arrowColor"
         @deleteEdge="deleteEdge"
       />
+      <dag-edge
+        v-if="draftEdge"
+        :id="draftEdge.id"
+        :start="draftEdge.start"
+        :end="draftEdge.end"
+        :edge-color="draftEdge.edgeColor"
+        :arrow-color="draftEdge.arrowColor"
+      />
     </template>
     <template #nodes>
       <dag-node
         v-for="node in value.nodes"
+        :id="node.id"
         :key="'node_' + node.id"
         :x="node.x"
         :y="node.y"
         @selectNode="selectNode($event, node)"
+        @linkClick="linkClick"
       />
     </template>
   </dag-container>
@@ -33,7 +43,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { DAGContainer } from '@/components/DAGContainer';
 import { DAGNode } from '@/components/DAGNode';
 import { DAGEdge } from '@/components/DAGEdge';
-import { GraphData, GraphNode } from '../types';
+import { GraphData, GraphNode, GraphEdge, GraphLinkPosition } from '../types';
 
 @Component({
   components: {
@@ -58,7 +68,8 @@ export default class VueDAG extends Vue {
   readonly value!: GraphData;
 
   dragging = false;
-  linking = false;
+
+  newEdge: any = null;
 
   selected: GraphNode | null = null;
 
@@ -70,11 +81,13 @@ export default class VueDAG extends Vue {
   };
 
   get edges() {
-    return this.value.edges.map(edge => {
+    let edges = this.value.edges.map(edge => {
       const fromNode = this.value.nodes.find(node => node.id === edge.from);
       const toNode = this.value.nodes.find(node => node.id === edge.to);
 
       if (!fromNode || !toNode) return;
+      if (!fromNode.x || !fromNode.y) return;
+      if (!toNode.x || !toNode.y) return;
 
       let x, y, fy, fx, tx, ty;
       [fx, fy] = this.getLinkPosition(edge.fromLink || 'right', fromNode.x, fromNode.y);
@@ -86,6 +99,23 @@ export default class VueDAG extends Vue {
         end: [tx, ty],
       };
     });
+
+    return edges;
+  }
+
+  get draftEdge() {
+    if (!this.newEdge) return null;
+
+    let x, y, fy, fx;
+    const fromNode = this.value.nodes.find(node => node.id === this.newEdge.from);
+
+    if (!fromNode || !fromNode.x || !fromNode.y) return null;
+    [fx, fy] = this.getLinkPosition(this.newEdge.fromLink || 'right', fromNode.x, fromNode.y);
+
+    return {
+      start: [fx, fy],
+      end: [this.newEdge.tx, this.newEdge.ty],
+    };
   }
 
   getLinkPosition(type: string, x: number, y: number) {
@@ -107,6 +137,51 @@ export default class VueDAG extends Vue {
     this.value.edges = this.value.edges.filter(e => e.id !== id);
   }
 
+  linkClick(linkPosition: GraphLinkPosition, id: number) {
+    if (this.newEdge) {
+      this.stopLinking(linkPosition, id);
+    } else {
+      this.startLinking(linkPosition, id);
+    }
+  }
+
+  startLinking(linkPosition: GraphLinkPosition, id: number) {
+    const [mx, my] = [this.mouse.x, this.mouse.y];
+    this.newEdge = {
+      from: id,
+      fromLink: linkPosition,
+      tx: mx,
+      ty: my,
+    };
+  }
+
+  stopLinking(linkPosition: GraphLinkPosition, id: number) {
+    if (this.newEdge.from !== id) {
+      const exists = this.value.edges.find(edge => {
+        return edge.from === this.newEdge.from && edge.to === id;
+      });
+
+      if (!exists) {
+        let maxID = Math.max(
+          0,
+          ...this.value.edges.map(edge => {
+            return edge.id;
+          }),
+        );
+        const newEdge: GraphEdge = {
+          id: maxID + 1,
+          from: this.newEdge.from,
+          fromLink: this.newEdge.fromLink,
+          to: id,
+          toLink: linkPosition,
+        };
+        this.value.edges.push(newEdge);
+        this.$emit('edgeAdded', newEdge);
+      }
+    }
+    this.newEdge = null;
+  }
+
   selectNode(e: MouseEvent, node: GraphNode) {
     this.selected = node;
     this.mouse.lastX = e.pageX || e.clientX + document.documentElement.scrollLeft;
@@ -124,14 +199,15 @@ export default class VueDAG extends Vue {
       this.moveSelectedNode(dx, dy);
     }
 
-    if (this.linking) {
+    if (this.newEdge) {
       [this.mouse.x, this.mouse.y] = this.getMousePosition(this.$el, e);
+      [this.newEdge.tx, this.newEdge.ty] = [this.mouse.x, this.mouse.y];
     }
   }
 
   handleMouseUp(e: MouseEvent) {
+    const target = e.target || e.srcElement;
     this.dragging = false;
-    this.linking = false;
   }
 
   handleMouseDown(e: MouseEvent) {

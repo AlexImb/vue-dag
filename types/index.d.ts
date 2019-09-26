@@ -9,15 +9,15 @@ declare interface GraphNode {
   y?: number;
 }
 
-declare type GraphLink = 'top' | 'right' | 'bottom' | 'left';
+declare type GraphLinkPosition = 'top' | 'right' | 'bottom' | 'left';
 
 declare interface GraphEdge {
   id: number;
-  content: string;
+  content?: string;
   from: number;
   to: number;
-  fromLink?: GraphLink;
-  toLink?: GraphLink;
+  fromLink?: GraphLinkPosition;
+  toLink?: GraphLinkPosition;
   edgeColor?: string;
   arrowColor?: string;
 }
@@ -28,4 +28,4 @@ declare interface GraphData {
   edges: GraphEdge[];
 }
 
-export { GraphData, GraphConfig, GraphEdge, GraphNode };
+export { GraphData, GraphConfig, GraphEdge, GraphNode, GraphLinkPosition };

@@ -24,7 +24,7 @@ export default class DAGLink extends Vue {
   get pathStyle() {
     return {
       stroke: this.edgeColor,
-      strokeWidth: 1,
+      strokeWidth: 2.75,
       fill: 'none',
     };
   }
@@ -32,7 +32,7 @@ export default class DAGLink extends Vue {
   get arrowStyle() {
     return {
       stroke: this.arrowColor,
-      strokeWidth: 5.73205,
+      strokeWidth: 6,
       fill: 'none',
     };
   }
