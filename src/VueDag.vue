@@ -1,5 +1,7 @@
 <template>
   <dag-container
+    :height="value.config.height"
+    :width="value.config.width"
     @mousemove.native="handleMouseMove"
     @mouseup.native="handleMouseUp"
     @mousedown.native="handleMouseDown"
@@ -59,6 +61,8 @@ export default class VueDAG extends Vue {
       return {
         config: {
           scale: 1,
+          height: '100%',
+          width: '100%',
         },
         nodes: [],
         edges: [],
@@ -89,7 +93,7 @@ export default class VueDAG extends Vue {
       if (!fromNode.x || !fromNode.y) return;
       if (!toNode.x || !toNode.y) return;
 
-      let x, y, fy, fx, tx, ty;
+      let fy, fx, tx, ty;
       [fx, fy] = this.getLinkPosition(edge.fromLink || 'right', fromNode.x, fromNode.y);
       [tx, ty] = this.getLinkPosition(edge.toLink || 'left', toNode.x, toNode.y);
 
@@ -192,6 +196,7 @@ export default class VueDAG extends Vue {
     if (this.dragging) {
       this.mouse.x = e.pageX || e.clientX + document.documentElement.scrollLeft;
       this.mouse.y = e.pageY || e.clientY + document.documentElement.scrollTop;
+
       const dx = this.mouse.x - this.mouse.lastX;
       const dy = this.mouse.y - this.mouse.lastY;
       this.mouse.lastX = this.mouse.x;
@@ -217,27 +222,27 @@ export default class VueDAG extends Vue {
 
   moveSelectedNode(dx: number, dy: number) {
     if (!this.selected || !this.selected.x || !this.selected.y) return;
-    this.selected.x = this.selected.x + dx / this.value.config.scale;
-    this.selected.y = this.selected.y + dy / this.value.config.scale;
+    this.selected.x = this.selected.x + dx / (this.value.config.scale || 1);
+    this.selected.y = this.selected.y + dy / (this.value.config.scale || 1);
   }
 
   getMousePosition(element: Element, event: MouseEvent) {
-    let mouseX = event.pageX || event.clientX + document.documentElement.scrollLeft;
-    let mouseY = event.pageY || event.clientY + document.documentElement.scrollTop;
+    const mouseX = event.pageX || event.clientX + document.documentElement.scrollLeft;
+    const mouseY = event.pageY || event.clientY + document.documentElement.scrollTop;
 
-    let offset = this.getOffsetRect(element);
-    let x = mouseX - offset.left;
-    let y = mouseY - offset.top;
+    const offset = this.getOffsetRect(element);
+    const x = mouseX - offset.left;
+    const y = mouseY - offset.top;
 
     return [x, y];
   }
 
   getOffsetRect(element: Element) {
-    let box = element.getBoundingClientRect();
-    let scrollTop = window.pageYOffset;
-    let scrollLeft = window.pageXOffset;
-    let top = box.top + scrollTop;
-    let left = box.left + scrollLeft;
+    const box = element.getBoundingClientRect();
+    const scrollTop = window.pageYOffset;
+    const scrollLeft = window.pageXOffset;
+    const top = box.top + scrollTop;
+    const left = box.left + scrollLeft;
     return { top: Math.round(top), left: Math.round(left) };
   }
 }

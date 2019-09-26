@@ -1,5 +1,7 @@
 declare interface GraphConfig {
-  scale: number;
+  scale?: number;
+  height?: string;
+  width?: string;
 }
 
 declare interface GraphNode {

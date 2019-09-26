@@ -13,8 +13,10 @@ $vd-node-box-shadow: 0 0 4px 0 $vd-node-box-shadow-color !default;
 .vd__container {
 	background: linear-gradient(90deg, $vd-bg-color ($vd-dot-space - $vd-dot-size), transparent 1%) center, linear-gradient($vd-bg-color ($vd-dot-space - $vd-dot-size), transparent 1%) center, $vd-dot-color;
 	background-size: $vd-dot-space $vd-dot-space;
-	min-width: 100%;
-	min-height: 100%;
+
+	margin: 0;
+	position: relative;
+	overflow: hidden;
 }
 
 .vd__node {

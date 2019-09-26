@@ -1,7 +1,15 @@
 <template>
   <main>
-    {{ graphData }}
-    <vue-dag v-model="graphData" />
+    <section class="section">
+      <h1 class="title">Vue DAG Demo</h1>
+
+      <div class="columns">
+        <div class="column is-4"></div>
+        <div class="column">
+          <vue-dag v-model="graphData" />
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -17,12 +25,13 @@ export default class App extends Vue {
   graphData: GraphData = {
     config: {
       scale: 1,
+      width: '100%',
+      height: '100vh',
     },
     nodes: [
       { id: 0, content: 'content 0', x: 500 * Math.random(), y: 500 * Math.random() },
       { id: 1, content: 'content 1', x: 500 * Math.random(), y: 500 * Math.random() },
       { id: 2, content: 'content 2', x: 500 * Math.random(), y: 500 * Math.random() },
-      { id: 3, content: 'content 3' },
     ],
     edges: [
       { id: 0, content: 'link 0', from: 0, to: 1, edgeColor: 'red', arrowColor: 'red' },
