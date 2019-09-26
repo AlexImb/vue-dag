@@ -39,6 +39,7 @@
         <component
           :is="node.component"
           v-if="node.component"
+          v-bind="node.props"
           @edit="$emit('edit', node.id)"
           @delete="$emit('delete', node.id)"
         />

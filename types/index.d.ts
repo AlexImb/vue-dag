@@ -7,7 +7,8 @@ declare interface GraphConfig {
 declare interface GraphNode {
   id: number;
   content?: string;
-  component?: any;
+  component?: Object;
+  props?: Object;
   x?: number;
   y?: number;
 }

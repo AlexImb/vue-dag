@@ -32,7 +32,13 @@ export default class App extends Vue {
       height: '100vh',
     },
     nodes: [
-      { id: 0, x: 500 * Math.random(), y: 500 * Math.random(), component: 'ExampleNode' },
+      {
+        id: 0,
+        x: 500 * Math.random(),
+        y: 500 * Math.random(),
+        component: 'ExampleNode',
+        props: { exampleProp: '✨' },
+      },
       { id: 1, x: 500 * Math.random(), y: 500 * Math.random(), content: 'Example content' },
       { id: 2, x: 500 * Math.random(), y: 500 * Math.random() },
     ],

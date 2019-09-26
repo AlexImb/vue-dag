@@ -1,6 +1,7 @@
 <template>
   <div class="example-node">
-    <h1>Example Custom Component</h1>
+    <h1>Example Custom Component Node {{ exampleProp }}</h1>
+
     <span @click="$emit('edit')">✏️ Edit</span>
     <span class="pull-right" @click="$emit('delete')">❌ Delete</span>
   </div>
@@ -19,5 +20,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
 @Component
-export default class ExampleNode extends Vue {}
+export default class ExampleNode extends Vue {
+  @Prop() readonly exampleProp!: Object;
+}
 </script>
