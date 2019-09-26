@@ -2,51 +2,14 @@
 
 exports[`App renders correctly 1`] = `
 <main>
-  {
-  "config": {
-  "scale": 1
-  },
-  "nodes": [
-  {
-  "id": 0,
-  "content": "content 0",
-  "x": 339.824850468057,
-  "y": 484.8792527416604
-  },
-  {
-  "id": 1,
-  "content": "content 1",
-  "x": 342.3746592263395,
-  "y": 299.77596505704184
-  },
-  {
-  "id": 2,
-  "content": "content 2",
-  "x": 347.05881985069374,
-  "y": 208.23528204011677
-  },
-  {
-  "id": 3,
-  "content": "content 3"
-  }
-  ],
-  "edges": [
-  {
-  "id": 0,
-  "content": "link 0",
-  "from": 0,
-  "to": 1,
-  "edgeColor": "red",
-  "arrowColor": "red"
-  },
-  {
-  "id": 1,
-  "content": "link 0",
-  "from": 1,
-  "to": 2
-  }
-  ]
-  }
-  <vue-dag-stub value="[object Object]"></vue-dag-stub>
+  <section class="section">
+    <h1 class="title">Vue DAG Demo</h1>
+    <div class="columns">
+      <div class="column is-4"></div>
+      <div class="column">
+        <vue-dag-stub value="[object Object]"></vue-dag-stub>
+      </div>
+    </div>
+  </section>
 </main>
 `;
