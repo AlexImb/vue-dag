@@ -17,6 +17,9 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import VueDag from './VueDag.vue';
 import { GraphData } from 'types';
+import ExampleNode from './ExampleNode.vue';
+
+Vue.component('ExampleNode', ExampleNode);
 
 @Component({
   components: { VueDag },
@@ -29,13 +32,13 @@ export default class App extends Vue {
       height: '100vh',
     },
     nodes: [
-      { id: 0, content: 'content 0', x: 500 * Math.random(), y: 500 * Math.random() },
-      { id: 1, content: 'content 1', x: 500 * Math.random(), y: 500 * Math.random() },
-      { id: 2, content: 'content 2', x: 500 * Math.random(), y: 500 * Math.random() },
+      { id: 0, x: 500 * Math.random(), y: 500 * Math.random(), component: 'ExampleNode' },
+      { id: 1, x: 500 * Math.random(), y: 500 * Math.random(), content: 'Example content' },
+      { id: 2, x: 500 * Math.random(), y: 500 * Math.random() },
     ],
     edges: [
-      { id: 0, content: 'link 0', from: 0, to: 1, edgeColor: 'red', arrowColor: 'red' },
-      { id: 1, content: 'link 0', from: 1, to: 2 },
+      { id: 0, from: 0, to: 1, edgeColor: 'red', arrowColor: 'red' },
+      { id: 1, from: 1, to: 2 },
     ],
   };
 }

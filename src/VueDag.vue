@@ -35,7 +35,10 @@
         :y="node.y"
         @selectNode="selectNode($event, node)"
         @linkClick="linkClick"
-      />
+      >
+        <component :is="node.component" v-if="node.component" />
+        <div v-if="node.content">{{ node.content }}</div>
+      </dag-node>
     </template>
   </dag-container>
 </template>
