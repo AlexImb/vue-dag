@@ -6,7 +6,7 @@
       <div class="columns">
         <div class="column is-4"></div>
         <div class="column">
-          <vue-dag v-model="graphData" />
+          <vue-dag v-model="graphData" @edit="onNodeEdit" @delete="onNodeDelete" />
         </div>
       </div>
     </section>
@@ -41,6 +41,14 @@ export default class App extends Vue {
       { id: 1, from: 1, to: 2 },
     ],
   };
+
+  onNodeEdit() {
+    console.log('Node edit event', arguments);
+  }
+
+  onNodeDelete() {
+    console.log('Node edit event', arguments);
+  }
 }
 </script>
 

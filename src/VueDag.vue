@@ -36,7 +36,12 @@
         @selectNode="selectNode($event, node)"
         @linkClick="linkClick"
       >
-        <component :is="node.component" v-if="node.component" />
+        <component
+          :is="node.component"
+          v-if="node.component"
+          @edit="$emit('edit', node.id)"
+          @delete="$emit('delete', node.id)"
+        />
         <div v-if="node.content">{{ node.content }}</div>
       </dag-node>
     </template>
@@ -128,13 +133,13 @@ export default class VueDAG extends Vue {
   getLinkPosition(type: string, x: number, y: number) {
     switch (type) {
       case 'top':
-        return [x + 120, y - 30];
+        return [x + 120, y];
       case 'right':
-        return [x + 240, y + 5];
+        return [x + 240, y + 40];
       case 'bottom':
-        return [x + 120, y + 45];
+        return [x + 120, y + 40];
       case 'left':
-        return [x, y + 5];
+        return [x, y + 40];
       default:
         break;
     }
