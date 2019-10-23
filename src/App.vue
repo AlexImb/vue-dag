@@ -52,8 +52,11 @@ export default class App extends Vue {
     console.log('Node edit event', arguments);
   }
 
-  onNodeDelete() {
-    console.log('Node edit event', arguments);
+  onNodeDelete(id: number) {
+    console.log('Node delete event', id);
+    this.graphData.edges = this.graphData.edges.filter(e => e.from !== id && e.to !== id);
+    const index = this.graphData.nodes.findIndex(node => node.id === id);
+    if (index > -1) this.graphData.nodes.splice(index, 1);
   }
 }
 </script>
