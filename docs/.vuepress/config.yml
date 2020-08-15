@@ -14,6 +14,8 @@ themeConfig:
       link: '/guide/installation'
     - text: API
       link: '/api/'
+    - text: Demo
+      link: 'https://vue-dag-example.netlify.app'
   sidebarDepth: 2,
   sidebar:
     - '/guide/':
