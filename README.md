@@ -7,6 +7,17 @@
 [![vue2](https://img.shields.io/badge/vue-2+-brightgreen.svg)](https://vuejs.org/)
 ![GitHub](https://img.shields.io/github/license/aleximb/vue-dag.svg)
 
+## Examples
+
+[vue-dag-example.netlify.app](https://vue-dag-example.netlify.app/)
+
+![Screenshot](docs/.vuepress/public/screenshot.png)
+
+
+[eddy-analytics.org](eddy-analytics.org)
+
+![Screenshot Eddy](docs/.vuepress/public/screenshot-eddy.png)
+
 ## Installation
 
 ```bash
