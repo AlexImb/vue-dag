@@ -13,7 +13,7 @@
 
 ![Screenshot](docs/.vuepress/public/screenshot.png)
 
-[eddy-analytics.org](eddy-analytics.org)
+[eddy-analytics.org](https://eddy-analytics.org)
 
 ![Screenshot Eddy](docs/.vuepress/public/screenshot-eddy.png)
 
