@@ -8,9 +8,7 @@
       @click="$emit('linkClick', position, id)"
     ></div>
     <slot>
-      <div class="vd__node__default-content">
-        Empty node
-      </div>
+      <div class="vd__node__default-content">Empty node</div>
     </slot>
   </div>
 </template>

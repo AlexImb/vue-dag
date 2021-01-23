@@ -94,9 +94,9 @@ export default class VueDAG extends Vue {
   };
 
   get edges() {
-    let edges = this.value.edges.map(edge => {
-      const fromNode = this.value.nodes.find(node => node.id === edge.from);
-      const toNode = this.value.nodes.find(node => node.id === edge.to);
+    let edges = this.value.edges.map((edge) => {
+      const fromNode = this.value.nodes.find((node) => node.id === edge.from);
+      const toNode = this.value.nodes.find((node) => node.id === edge.to);
 
       if (!fromNode || !toNode) return;
       if (!fromNode.x || !fromNode.y) return;
@@ -120,7 +120,7 @@ export default class VueDAG extends Vue {
     if (!this.newEdge) return null;
 
     let x, y, fy, fx;
-    const fromNode = this.value.nodes.find(node => node.id === this.newEdge.from);
+    const fromNode = this.value.nodes.find((node) => node.id === this.newEdge.from);
 
     if (!fromNode || !fromNode.x || !fromNode.y) return null;
     [fx, fy] = this.getLinkPosition(this.newEdge.fromLink || 'right', fromNode.x, fromNode.y);
@@ -147,7 +147,7 @@ export default class VueDAG extends Vue {
   }
 
   deleteEdge(id: number) {
-    this.value.edges = this.value.edges.filter(e => e.id !== id);
+    this.value.edges = this.value.edges.filter((e) => e.id !== id);
   }
 
   linkClick(linkPosition: GraphLinkPosition, id: number) {
@@ -170,14 +170,14 @@ export default class VueDAG extends Vue {
 
   stopLinking(linkPosition: GraphLinkPosition, id: number) {
     if (this.newEdge.from !== id) {
-      const exists = this.value.edges.find(edge => {
+      const exists = this.value.edges.find((edge) => {
         return edge.from === this.newEdge.from && edge.to === id;
       });
 
       if (!exists) {
         let maxID = Math.max(
           0,
-          ...this.value.edges.map(edge => {
+          ...this.value.edges.map((edge) => {
             return edge.id;
           }),
         );
@@ -220,12 +220,12 @@ export default class VueDAG extends Vue {
   }
 
   handleMouseUp(e: MouseEvent) {
-    const target = e.target || e.srcElement;
+    const target = e.target;
     this.dragging = false;
   }
 
   handleMouseDown(e: MouseEvent) {
-    const target = e.target || e.srcElement;
+    const target = e.target;
     this.dragging = true;
   }
 
