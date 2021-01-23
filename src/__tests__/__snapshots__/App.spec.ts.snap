@@ -5,7 +5,6 @@ exports[`App renders correctly 1`] = `
   <section class="section">
     <h1 class="title">Vue DAG Demo</h1>
     <div class="columns">
-      <div class="column is-4"></div>
       <div class="column">
         <vue-dag-stub value="[object Object]"></vue-dag-stub>
       </div>

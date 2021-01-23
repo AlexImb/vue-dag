@@ -1,5 +1,5 @@
 <template>
-  <dag-container
+  <DAGContainer
     :height="value.config.height"
     :width="value.config.width"
     @mousemove.native="handleMouseMove"
@@ -7,7 +7,7 @@
     @mousedown.native="handleMouseDown"
   >
     <template v-if="edges" #edges>
-      <dag-edge
+      <DAGEdge
         v-for="edge in edges"
         :id="edge.id"
         :key="'edge_' + edge.id"
@@ -17,7 +17,7 @@
         :arrow-color="edge.arrowColor"
         @deleteEdge="deleteEdge"
       />
-      <dag-edge
+      <DAGEdge
         v-if="draftEdge"
         :id="draftEdge.id"
         :start="draftEdge.start"
@@ -27,7 +27,7 @@
       />
     </template>
     <template #nodes>
-      <dag-node
+      <DAGNode
         v-for="node in value.nodes"
         :id="node.id"
         :key="'node_' + node.id"
@@ -44,9 +44,9 @@
           @delete="$emit('delete', node.id)"
         />
         <div v-if="node.content">{{ node.content }}</div>
-      </dag-node>
+      </DAGNode>
     </template>
-  </dag-container>
+  </DAGContainer>
 </template>
 
 <script lang="ts">
@@ -58,9 +58,9 @@ import { GraphData, GraphNode, GraphEdge, GraphLinkPosition } from '../types';
 
 @Component({
   components: {
-    'dag-container': DAGContainer,
-    'dag-node': DAGNode,
-    'dag-edge': DAGEdge,
+    DAGContainer,
+    DAGNode,
+    DAGEdge,
   },
 })
 export default class VueDAG extends Vue {
@@ -119,7 +119,7 @@ export default class VueDAG extends Vue {
   get draftEdge() {
     if (!this.newEdge) return null;
 
-    let x, y, fy, fx;
+    let fy, fx;
     const fromNode = this.value.nodes.find((node) => node.id === this.newEdge.from);
 
     if (!fromNode || !fromNode.x || !fromNode.y) return null;

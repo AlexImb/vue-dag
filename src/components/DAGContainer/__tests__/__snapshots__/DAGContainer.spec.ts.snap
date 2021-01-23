@@ -6,8 +6,6 @@ exports[`DAGContainer renders correctly 1`] = `
   <div class="vd__node__link vd__node__link--right"></div>
   <div class="vd__node__link vd__node__link--left"></div>
   <div class="vd__node__link vd__node__link--bottom"></div>
-  <div class="vd__node__default-content">
-    Empty node
-  </div>
+  <div class="vd__node__default-content">Empty node</div>
 </div>
 `;
